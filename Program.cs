@@ -8,8 +8,12 @@ builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.UseSwagger();
 app.UseSwaggerUI();
+
 
 app.MapGet("/dado/d{numeroDeFaces}",(
   [FromRoute] int numeroDeFaces
@@ -18,7 +22,8 @@ app.MapGet("/dado/d{numeroDeFaces}",(
     {
         return Results.BadRequest(new { mensagem = "Somente dadaos com no minimo uma face"});
     }
-    
+
+
 int face = RandomNumberGenerator.GetInt32(1, numeroDeFaces + 1);
 
 return Results.Ok(new { dado = $"d{numeroDeFaces}", rolagem = face});
